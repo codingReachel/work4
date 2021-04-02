@@ -163,13 +163,17 @@
 
         //左侧插入
         btnLIn.onclick = function () {
-            list.unshift(save());
+            if (save()) {
+                list.unshift(save());
+            }
             draw(list);
         };
 
         //右侧插入
         btnRIn.onclick = function () {
-            list.push(save());
+            if (save()) {
+                list.push(save());
+            }
             draw(list);
         };
 
