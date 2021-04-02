@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .nav {
+            width: 1130px;
+            height: 39px;
+            margin: 18px auto;
+        }
+
+        .nav input {
+            display: inline-block;
+            width: 254px;
+            height: 42px;
+            margin-left: 18px;
+        }
+
+        .nav button {
+            width: 100px;
+            height: 38px;
+            margin-left: 15px;
+            border: none;
+            background-color: #faebd7;
+            border-radius: 6px;
+        }
+
+        .bar {
+            width: 1130px;
+            height: 620px;
+            background: #7fffd4;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <input type="text" id="text">
+
+        <button id="left-in">左侧入</button>
+        <button id="right-in">右侧入</button>
+        <button id="left-out">左侧出</button>
+        <button id="right-out">右侧出</button>
+        <button id="resort">重新排序</button>
+        <button id="clear">清空</button>
+        <button id="random">随机生成</button>
+    </div>
+
+    <div class="bar" id="bar">
+
+    </div>
+
+    <script type="text/javascript">
+        var text = document.getElementById('text');
+        var btn = document.querySelector('button');
+        var btnLIn = document.getElementById('left-in');
+        var btnRIn = document.getElementById('right-in');
+        var btnLout = document.getElementById('left-out');
+        var btnRout = document.getElementById('right-out');
+        var btnResort = document.getElementById('resort');
+        var btnClear = document.getElementById('clear');
+        var btnRandom = document.getElementById('random');
+
+        //定义全局变量
+        var list = [];
+        var arr = [];
+
+        //随机数函数
+        function random(n, min, max) {
+            for (var i = 0; i < n; i++) {
+                list.push(Math.floor(Math.random() * (max - min) + min))
+            }
+            return list;
+        };
+
+        //绘制图表函数
+        function draw(arr) {
+            var myChart = echarts.init(document.getElementById('bar'));
+
+            var option = {
+                color: "#FFBFCA",
+                xAxis: {
+                    data: arr,
+                    axisLabel: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    z: 10
+                },
+                yAxis: {
+                    show: false
+                },
+                grid: {
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0
+                },
+                series: [{
+                    symbolSize: 0, // symbol的大小设置为0
+                    showSymbol: false, // 不显示symbol
+
+                    type: 'bar',
+                    data: arr,
+                    label: {
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        show: true,
+                        color: "#fff",
+                        position: "insidetop",
+                        ailgn: "center"
+                    }
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        };
+
+        function bubSort() {
+            for (var i = 0; i < list.length - 1; i++) {
+                for (var j = 0; j < list.length - i - 1; j++) {
+                    if (list[j] > list[j + 1]) {
+                        var temp = list[j];
+                        list[j] = list[j + 1];
+                        list[j + 1] = temp;
+                    }
+                    arr.push(list.slice());
+                }
+            }
+        };
+
+        //提示信息以及保存值
+        function save() {
+            var val = text.value;
+            if (val < 10 || val > 100) {
+                alert('请输入10-100以内的数！');
+                return;
+            }
+
+            //返回值
+            return val;
+        };
+
+
+        //左侧插入
+        btnLIn.onclick = function () {
+            list.unshift(save());
+            draw(list);
+        };
+
+        //右侧插入
+        btnRIn.onclick = function () {
+            list.push(save());
+            draw(list);
+        };
+
+        //左侧删除
+        btnLout.onclick = function () {
+            list.shift();
+            draw(list);
+        };
+
+        //右侧删除
+        btnRout.onclick = function () {
+            list.pop();
+            draw(list);
+        };
+
+        //排序
+        btnResort.onclick = function () {
+            bubSort();
+            arr.forEach((item, index) => {
+                setTimeout(() => draw(item), index * 100);
+            });
+            arr.length = 0;
+        };
+
+
+        //随机生成
+        btnRandom.onclick = function () {
+            //清空当前数组
+            list.length = 0;
+            //生成随机数
+            random(20, 10, 100);
+            //绘制柱状图
+            draw(list);
+
+        };
+
+        //清空
+        btnClear.onclick = function () {
+            list.length = 0;
+            draw();
+        }
+    </script>
+</body>
+
+</html>

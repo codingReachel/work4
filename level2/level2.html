@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="" cols="80" rows="10"></textarea>
+    <button class="post">点击发布</button>
+    <div class="list">
+    </div>
+
+    <script type="text/javascript">
+       var text = document.querySelector('textarea');
+       var btn = document.querySelector('button');
+       var div = document.querySelector('div');
+
+       btn.onclick = function() {
+           var val = text.value;
+
+           //按钮
+           if (val == ''){
+               alert('请输入内容！')
+               return;
+           }
+
+           //保存内容
+           var div0 = document.createElement('div');
+           div0.innerText = val;
+           div.insertBefore(div0, div.children[0]);
+           //隐藏内容
+           div.style.display = 'none';
+           
+           text.value = '';
+       };
+    </script>
+</body>
+</html>

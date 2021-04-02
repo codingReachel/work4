@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style: none;
+            width: 200px;
+            height: 200px;
+        }
+
+        li {
+            box-sizing: border-box;
+            border: 2px solid black;
+            float: left;
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="draw">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <script type="text/javascript">
+        // 当鼠标被按住时写字
+        window.onload = function () {
+            //1.鼠标按下时，开始画——绑定事件
+            //2.鼠标移动，画笔跟着移动
+            //3.鼠标松开，结束——取消事件
+            var ul = document.querySelector('ul');
+            ul.onmousedown = function (e) {
+                //兼容
+                var e = e || event;
+                
+                //标记鼠标down
+                var flag = true;
+                ul.onmousemove = function (e) {
+
+                    li = document.getElementsByTagName("li");
+
+                    for (var j = 0; j < li.length; j++) {
+
+                        document.onmouseup = function () {
+                            //标记鼠标抬起
+                            flag = false;
+                        }
+                        li[j].onmouseover = function () {
+                            //只有当鼠标按下且在格子上方时才可以画
+                            if (flag)
+                                this.style.background = '#00FF00';
+                            else
+                                this.style.background = ' ';
+                        }
+
+                    }
+
+                }
+
+                ul.onmouseup = function (e) {
+                    //取消事件
+                    ul.onmousemove = null;
+                }
+
+            }
+        };
+    </script>
+</body>
+
+</html>
